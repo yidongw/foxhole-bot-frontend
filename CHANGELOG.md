@@ -1,3 +1,15 @@
+# 1.0.0 (2025-04-16)
+
+
+### Bug Fixes
+
+* update dockerfile ([b26d3d2](https://github.com/yidongw/foxhole-bot-frontend/commit/b26d3d200a93d832724dbc74ca8b2dd78c333307))
+
+
+### Features
+
+* add foxhole profile pages ([d689b37](https://github.com/yidongw/foxhole-bot-frontend/commit/d689b378ff756135e44a6275f5e704d4b8222fc0))
+
 ## [3.66.2](https://github.com/ixartz/Next-js-Boilerplate/compare/v3.66.1...v3.66.2) (2025-04-12)
 
 
