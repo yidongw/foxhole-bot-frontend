@@ -1,3 +1,5 @@
+// Remove 'use client' directive
+
 // Import the new client component
 import ProfileList from '@/components/ProfileList'; // Adjust path if needed
 // Remove useQuery import

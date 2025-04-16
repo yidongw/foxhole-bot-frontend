@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { PostHogProvider } from '@/components/analytics/PostHogProvider';
-import { DemoBadge } from '@/components/DemoBadge';
 import { routing } from '@/libs/i18nNavigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
@@ -17,19 +16,7 @@ export const metadata: Metadata = {
     },
     {
       rel: 'icon',
-      type: 'image/png',
-      sizes: '32x32',
-      url: '/favicon-32x32.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '16x16',
-      url: '/favicon-16x16.png',
-    },
-    {
-      rel: 'icon',
-      url: '/favicon.ico',
+      url: '/favicon.jpg',
     },
   ],
 };
@@ -57,7 +44,7 @@ export default async function RootLayout(props: {
   // which dynamically adds a `style` attribute to the body tag.
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body suppressHydrationWarning>
         <Providers>
           <NextIntlClientProvider
@@ -67,7 +54,6 @@ export default async function RootLayout(props: {
             <PostHogProvider>
               {props.children}
             </PostHogProvider>
-            <DemoBadge />
           </NextIntlClientProvider>
         </Providers>
       </body>

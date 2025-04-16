@@ -1,5 +1,4 @@
 import { db } from '@/libs/DB';
-import { logger } from '@/libs/Logger';
 import { counterSchema } from '@/models/Schema';
 import { eq } from 'drizzle-orm';
 import { getTranslations } from 'next-intl/server';
@@ -15,8 +14,6 @@ export const CurrentCount = async () => {
     where: eq(counterSchema.id, id),
   });
   const count = result[0]?.count ?? 0;
-
-  logger.info('Counter fetched successfully');
 
   return (
     <div>

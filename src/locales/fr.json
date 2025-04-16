@@ -37,6 +37,18 @@
     "about_paragraph": "Bienvenue sur notre page À propos ! Nous sommes une équipe de passionnés et dévoués à la création de logiciels.",
     "translation_powered_by": "Traduction propulsée par"
   },
+  "Profiles": {
+    "meta_title": "Profile",
+    "meta_description": "Profile page description",
+    "no_profiles_found": "No profiles found"
+  },
+  "ProfileDetail": {
+    "meta_title": "Profile Detail",
+    "meta_description": "Profile detail page description",
+    "error_loading": "Error loading profile details",
+    "profile_not_found": "Profile not found",
+    "error_fetching_details": "Error fetching profile details"
+  },
   "Portfolio": {
     "meta_title": "Portfolio",
     "meta_description": "Bienvenue sur la page de mon portfolio !",

@@ -9,17 +9,30 @@ const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
+const remotePatterns = [
+  {
+    protocol: 'https' as const,
+    hostname: 'pbs.twimg.com',
+    pathname: '/**',
+  },
+];
+
 /** @type {import('next').NextConfig} */
+const nextConfig = {
+  eslint: {
+    dirs: ['.'],
+  },
+  poweredByHeader: false,
+  reactStrictMode: true,
+  serverExternalPackages: ['@electric-sql/pglite'],
+  images: {
+    remotePatterns,
+  },
+};
+
 export default withSentryConfig(
   bundleAnalyzer(
-    withNextIntl({
-      eslint: {
-        dirs: ['.'],
-      },
-      poweredByHeader: false,
-      reactStrictMode: true,
-      serverExternalPackages: ['@electric-sql/pglite'],
-    }),
+    withNextIntl(nextConfig),
   ),
   {
     // For all available options, see:

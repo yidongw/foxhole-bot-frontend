@@ -1,5 +1,4 @@
 import { db } from '@/libs/DB';
-import { logger } from '@/libs/Logger';
 import { counterSchema } from '@/models/Schema';
 import { CounterValidation } from '@/validations/CounterValidation';
 import { sql } from 'drizzle-orm';
@@ -26,8 +25,6 @@ export const PUT = async (request: Request) => {
       set: { count: sql`${counterSchema.count} + ${parse.data.increment}` },
     })
     .returning();
-
-  logger.info('Counter has been incremented');
 
   return NextResponse.json({
     count: count[0]?.count,
