@@ -17,22 +17,20 @@ const remotePatterns = [
   },
 ];
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  eslint: {
-    dirs: ['.'],
-  },
-  poweredByHeader: false,
-  reactStrictMode: true,
-  serverExternalPackages: ['@electric-sql/pglite'],
-  images: {
-    remotePatterns,
-  },
-};
-
 export default withSentryConfig(
   bundleAnalyzer(
-    withNextIntl(nextConfig),
+    withNextIntl({
+      eslint: {
+        dirs: ['.'],
+      },
+      poweredByHeader: false,
+      reactStrictMode: true,
+      serverExternalPackages: ['@electric-sql/pglite'],
+      images: {
+        remotePatterns,
+      },
+      output: 'standalone', // Add this line to enable standalone output
+    }),
   ),
   {
     // For all available options, see:
