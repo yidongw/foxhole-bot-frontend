@@ -160,7 +160,7 @@ export default function ProfileCard({ profile, locale }: ProfileCardProps) {
 
           {profile.isKol && (
             <span className="px-3 py-1 rounded-full text-sm font-bold whitespace-normal break-words bg-amber-400 dark:bg-amber-500 text-black dark:text-white min-w-[80px] text-center">
-              Tracking Followings
+              Influencer
             </span>
           )}
         </div>
@@ -212,7 +212,7 @@ export default function ProfileCard({ profile, locale }: ProfileCardProps) {
           </span>
           <span className="flex items-center gap-1 text-amber-500 dark:text-amber-400">
             <strong>{profile.kolFollowersCount.toLocaleString()}</strong>
-            Tracked Followers
+            Influencer Followers
           </span>
         </div>
       </div>

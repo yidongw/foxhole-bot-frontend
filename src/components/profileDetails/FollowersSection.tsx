@@ -1,4 +1,4 @@
-import type { FollowingEntry } from '@/app/[locale]/(marketing)/profiles/[username]/types';
+import type { FollowerEntry } from '@/app/[locale]/(marketing)/profiles/[username]/types';
 import type { ColumnDef } from '@tanstack/react-table';
 import { DataTable } from '@/components/DataTable';
 import {
@@ -9,8 +9,8 @@ import {
 } from '@/components/ui/tooltip';
 import React from 'react';
 
-const FollowingsSection: React.FC<{ followings: FollowingEntry[]; locale: string }> = ({ followings, locale }) => {
-  const columns: ColumnDef<FollowingEntry>[] = [
+const FollowersSection: React.FC<{ followers: FollowerEntry[]; locale: string }> = ({ followers, locale }) => {
+  const columns: ColumnDef<FollowerEntry>[] = [
     {
       accessorKey: 'createdAt',
       header: 'Time',
@@ -21,14 +21,14 @@ const FollowingsSection: React.FC<{ followings: FollowingEntry[]; locale: string
       ),
     },
     {
-      accessorKey: 'followeeProfileImageUrl',
+      accessorKey: 'followerProfileImageUrl',
       header: 'Profile',
       cell: ({ row }) => (
-        (row.original.followeeProfileImageUrl && row.original.followeeProfileImageUrl !== 'undefined')
+        (row.original.followerProfileImageUrl && row.original.followerProfileImageUrl !== 'undefined')
           ? (
               <div
                 className="w-8 h-8 rounded-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${row.original.followeeProfileImageUrl})` }}
+                style={{ backgroundImage: `url(${row.original.followerProfileImageUrl})` }}
               />
             )
           : (
@@ -37,29 +37,29 @@ const FollowingsSection: React.FC<{ followings: FollowingEntry[]; locale: string
       ),
     },
     {
-      accessorKey: 'followeeScreenName',
+      accessorKey: 'followerScreenName',
       header: 'Name',
       cell: ({ row }) => (
-        row.original.followeeScreenName
+        row.original.followerScreenName
           ? (
               <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
                   <a
-                    href={`/${locale}/profiles/${row.original.followeeScreenName}`}
+                    href={`/${locale}/profiles/${row.original.followerScreenName}`}
                     className="text-black dark:text-white hover:underline"
                   >
-                    {row.original.followeeName || row.original.followeeId}
+                    {row.original.followerName || row.original.followerId}
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>
                   <div>
                     <div className="font-medium">
                       @
-                      {row.original.followeeScreenName}
+                      {row.original.followerScreenName}
                     </div>
-                    {row.original.followeeDescription && (
+                    {row.original.followerDescription && (
                       <div className="text-sm text-muted-foreground mt-1">
-                        {row.original.followeeDescription}
+                        {row.original.followerDescription}
                       </div>
                     )}
                   </div>
@@ -68,26 +68,35 @@ const FollowingsSection: React.FC<{ followings: FollowingEntry[]; locale: string
             )
           : (
               <span className="text-black dark:text-white">
-                {row.original.followeeName || row.original.followeeId}
+                {row.original.followerName || row.original.followerId}
               </span>
             )
       ),
     },
     {
-      accessorKey: 'followeeFollowers',
-      header: () => <div className="text-right">@ Followers</div>, // Add text-right class
+      accessorKey: 'kolFollowersCount',
+      header: () => <div className="text-right">Inf. Followers</div>,
       cell: ({ row }) => (
         <div className="text-right text-black dark:text-white">
-          {row.original.followeeFollowers ? row.original.followeeFollowers.toLocaleString() : '-'}
+          {row.original.kolFollowersCount ? row.original.kolFollowersCount.toLocaleString() : '-'}
         </div>
       ),
     },
     {
-      accessorKey: 'followeeKeyFollowers',
-      header: () => <div className="text-right">@ Inf. Followers</div>, // Add text-right class
+      accessorKey: 'followerFollowers',
+      header: () => <div className="text-right">@ Followers</div>,
       cell: ({ row }) => (
         <div className="text-right text-black dark:text-white">
-          {row.original.followeeKeyFollowers ? row.original.followeeKeyFollowers.toLocaleString() : '-'}
+          {row.original.followerFollowers ? row.original.followerFollowers.toLocaleString() : '-'}
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'followerKeyFollowers',
+      header: () => <div className="text-right">@ Inf. Followers</div>,
+      cell: ({ row }) => (
+        <div className="text-right text-black dark:text-white">
+          {row.original.followerKeyFollowers ? row.original.followerKeyFollowers.toLocaleString() : '-'}
         </div>
       ),
     },
@@ -98,7 +107,7 @@ const FollowingsSection: React.FC<{ followings: FollowingEntry[]; locale: string
       <TooltipProvider>
         <DataTable
           columns={columns}
-          data={followings}
+          data={followers}
           showPagination={false}
         />
       </TooltipProvider>
@@ -106,4 +115,4 @@ const FollowingsSection: React.FC<{ followings: FollowingEntry[]; locale: string
   );
 };
 
-export default FollowingsSection;
+export default FollowersSection;

@@ -17,6 +17,7 @@ export const Env = createEnv({
   },
   shared: {
     NODE_ENV: z.enum(['test', 'development', 'production']).optional(),
+    NEXT_PUBLIC_API_HOST: z.string().min(1),
   },
   // You need to destructure all the keys manually
   runtimeEnv: {
@@ -31,5 +32,6 @@ export const Env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
     NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    NEXT_PUBLIC_API_HOST: process.env.NEXT_PUBLIC_API_HOST,
   },
 });

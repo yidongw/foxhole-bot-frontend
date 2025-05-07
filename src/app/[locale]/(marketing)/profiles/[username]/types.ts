@@ -41,10 +41,23 @@ export type FollowingEntry = {
   followeeKeyFollowers?: number; // Optional
 }; // Adjust path if necessary
 
+export type FollowerEntry = {
+  createdAt: string | null;
+  followerId: string;
+  followerProfileImageUrl?: string;
+  followerScreenName?: string;
+  followerName?: string;
+  followerDescription?: string;
+  followerFollowers?: number;
+  followerKeyFollowers?: number;
+  kolFollowersCount?: number;
+};
+
 export type ProfileDetailsData = {
   statusHistory: StatusHistoryEntry[];
   profileHistory: ProfileHistoryEntry[];
   pastUsernames: PastUsernameEntry[];
   userCas: UserCaEntry[];
   followings: FollowingEntry[];
+  followers: FollowerEntry[];
 } & ProfileData;
