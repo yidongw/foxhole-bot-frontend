@@ -42,6 +42,10 @@
     "meta_description": "Listing top 50 profiles",
     "no_profiles_found": "No profiles found"
   },
+  "Discover": {
+    "meta_title": "Discover",
+    "meta_description": "Discover page description"
+  },
   "ProfileDetail": {
     "meta_title": "Profile Detail",
     "meta_description": "Profile detail page description",

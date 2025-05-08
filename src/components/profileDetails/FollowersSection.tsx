@@ -87,7 +87,7 @@ const FollowersSection: React.FC<{ followers: FollowerEntry[]; locale: string }>
       header: () => <div className="text-right">@ Followers</div>,
       cell: ({ row }) => (
         <div className="text-right text-black dark:text-white">
-          {row.original.followerFollowers ? row.original.followerFollowers.toLocaleString() : '-'}
+          {row.original.followeeFollowers ? row.original.followeeFollowers.toLocaleString() : '-'}
         </div>
       ),
     },
@@ -96,7 +96,7 @@ const FollowersSection: React.FC<{ followers: FollowerEntry[]; locale: string }>
       header: () => <div className="text-right">@ Inf. Followers</div>,
       cell: ({ row }) => (
         <div className="text-right text-black dark:text-white">
-          {row.original.followerKeyFollowers ? row.original.followerKeyFollowers.toLocaleString() : '-'}
+          {row.original.followeeKeyFollowers ? row.original.followeeKeyFollowers.toLocaleString() : '-'}
         </div>
       ),
     },

@@ -48,8 +48,8 @@ export type FollowerEntry = {
   followerScreenName?: string;
   followerName?: string;
   followerDescription?: string;
-  followerFollowers?: number;
-  followerKeyFollowers?: number;
+  followeeFollowers?: number;
+  followeeKeyFollowers?: number;
   kolFollowersCount?: number;
 };
 
