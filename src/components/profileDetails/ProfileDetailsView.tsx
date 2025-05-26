@@ -4,6 +4,7 @@
 import type { ProfileDetailsData } from '@/app/[locale]/(marketing)/profiles/[username]/types';
 import type { ProfileData } from '@/components/ProfileCard';
 import ProfileCard, { ProfileCardSkeleton } from '@/components/ProfileCard';
+import { fetchApi } from '@/libs/api';
 import { Env } from '@/libs/Env';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
@@ -17,7 +18,7 @@ type ProfileDetailsViewProps = {
 
 // --- Fetcher Function ---
 async function fetchProfileDetails(username: string): Promise<ProfileDetailsData | null> {
-  const response = await fetch(`${Env.NEXT_PUBLIC_API_HOST}/api/v1/profiles/${username}`);
+  const response = await fetchApi(`${Env.NEXT_PUBLIC_API_HOST}/api/v1/profiles/${username}`);
 
   if (!response.ok) {
     if (response.status === 404) {

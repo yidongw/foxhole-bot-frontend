@@ -28,6 +28,7 @@ ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_cmVsYXhlZC10dXJrZXktNjcuY2xlcmsuYW
 ENV NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 ENV CLERK_SECRET_KEY=your_clerk_secret_key
 ENV NEXT_PUBLIC_API_HOST=https://foxhole.bot
+ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAABeHu-hu4rl7nz2p
 
 # Build the application
 RUN npm run build
@@ -44,6 +45,7 @@ ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_cmVsYXhlZC10dXJrZXktNjcuY2xlcmsuYW
 ENV NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 ENV CLERK_SECRET_KEY=your_clerk_secret_key
 ENV NEXT_PUBLIC_API_HOST=https://foxhole.bot
+ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAABeHu-hu4rl7nz2p
 
 # Create a non-root user
 RUN addgroup --system --gid 1001 nodejs

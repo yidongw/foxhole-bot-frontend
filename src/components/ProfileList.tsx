@@ -2,6 +2,7 @@
 
 import type { ProfileData } from '@/components/ProfileCard';
 import ProfileCard, { ProfileCardSkeleton } from '@/components/ProfileCard';
+import { fetchApi } from '@/libs/api';
 import { Env } from '@/libs/Env';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
@@ -13,7 +14,7 @@ type ProfileListProps = {
 
 // Define the function to fetch profiles (can be here or in a separate api utils file)
 const fetchProfiles = async (): Promise<ProfileData[]> => {
-  const response = await fetch(`${Env.NEXT_PUBLIC_API_HOST}/api/v1/profiles`);
+  const response = await fetchApi(`${Env.NEXT_PUBLIC_API_HOST}/api/v1/profiles`);
   if (!response.ok) {
     // Consider more specific error types or logging
     throw new Error(`API request failed with status ${response.status}`);

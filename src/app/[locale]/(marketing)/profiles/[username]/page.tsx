@@ -1,6 +1,7 @@
 import type { ProfileDetailsData } from '@/app/[locale]/(marketing)/profiles/[username]/types'; // Assuming types moved
 import type { Metadata } from 'next';
 import ProfileDetailsView from '@/components/profileDetails/ProfileDetailsView'; // Import the new client component
+import { fetchApi } from '@/libs/api';
 import { Env } from '@/libs/Env';
 import React from 'react'; // Import Suspense if needed for streaming/metadata
 
@@ -9,7 +10,7 @@ import React from 'react'; // Import Suspense if needed for streaming/metadata
 async function fetchProfileMetadata(username: string): Promise<Partial<ProfileDetailsData> | null> {
   try {
     // Consider creating a smaller API endpoint if metadata needs are minimal
-    const response = await fetch(`${Env.NEXT_PUBLIC_API_HOST}/api/v1/profiles/${username}`); // Example: fetch only needed fields
+    const response = await fetchApi(`${Env.NEXT_PUBLIC_API_HOST}/api/v1/profiles/${username}`); // Example: fetch only needed fields
 
     if (!response.ok) {
       return null; // Can't generate metadata if profile doesn't exist

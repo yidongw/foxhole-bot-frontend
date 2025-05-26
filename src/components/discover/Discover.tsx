@@ -1,6 +1,7 @@
 'use client';
 
 import type { DiscoverData } from './DiscoverTable';
+import { fetchApi } from '@/libs/api';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import DiscoverTable from './DiscoverTable';
@@ -11,7 +12,7 @@ async function fetchDiscoverData(sortField: SortField): Promise<DiscoverData> {
     ? '/api/v1/discover'
     : `/api/v1/discover/${sortField}`;
 
-  const response = await fetch(`https://foxhole.bot${endpoint}`);
+  const response = await fetchApi(endpoint);
 
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
