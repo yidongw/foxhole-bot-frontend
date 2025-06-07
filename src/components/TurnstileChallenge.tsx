@@ -68,7 +68,7 @@ export default function TurnstileChallenge({ siteKey, onSuccess }: TurnstileChal
             siteKey={siteKey}
             retry="auto"
             // refreshExpired="auto"
-            // sandbox={true}
+            sandbox={true}
             onVerify={(token) => {
               if (token) {
                 validateToken(token);

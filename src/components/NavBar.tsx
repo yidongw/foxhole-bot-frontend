@@ -1,4 +1,4 @@
-import { Compass, Users } from 'lucide-react';
+import { Compass, Megaphone, Users } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SearchInput } from './SearchInput';
@@ -22,6 +22,12 @@ export const NavBar = () => (
         <Users className="w-4 h-4" />
         <span className="hidden sm:inline">Profiles</span>
       </Link>
+
+      <Link href="/campaigns" className="flex items-center gap-2 hover:opacity-80">
+        <Megaphone className="w-4 h-4" />
+        <span className="hidden sm:inline">Campaigns</span>
+      </Link>
+
       <div className="flex items-center gap-2">
         <SearchInput />
         <ThemeSwitcher />

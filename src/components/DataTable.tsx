@@ -25,6 +25,7 @@ type DataTableProps<TData, TValue> = {
   data: TData[];
   maxHeight?: string;
   showPagination?: boolean;
+  rightElement?: React.ReactNode;
 };
 
 export function DataTable<TData, TValue>({
@@ -32,6 +33,7 @@ export function DataTable<TData, TValue>({
   data,
   maxHeight,
   showPagination = true,
+  rightElement,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -48,24 +50,36 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       {/* Pagination controls at the top */}
-      {showPagination && (
-        <div className="flex items-center justify-end space-x-2 pb-4 border-b">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
+      {(showPagination || rightElement) && (
+        <div className="flex items-center justify-between pb-4 border-b">
+          <div className="flex items-center space-x-2">
+            {showPagination
+              && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}
+                  >
+                    Next
+                  </Button>
+                </>
+              )}
+          </div>
+          {rightElement && (
+            <div>
+              {rightElement}
+            </div>
+          )}
         </div>
       )}
 

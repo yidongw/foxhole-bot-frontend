@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { PostHogProvider } from '@/components/analytics/PostHogProvider';
 import TurnstileProtection from '@/components/TurnstileProtection';
+import { Toaster } from '@/components/ui/sonner';
 import { Env } from '@/libs/Env';
 import { routing } from '@/libs/i18nNavigation';
 import { NextIntlClientProvider } from 'next-intl';
@@ -60,6 +61,7 @@ export default async function RootLayout(props: {
             </PostHogProvider>
           </NextIntlClientProvider>
         </Providers>
+        <Toaster />
       </body>
     </html>
   );

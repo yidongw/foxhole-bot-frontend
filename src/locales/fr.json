@@ -49,6 +49,10 @@
     "profile_not_found": "Profile not found",
     "error_fetching_details": "Error fetching profile details"
   },
+  "Campaigns": {
+    "meta_title": "Campaigns",
+    "meta_description": "Campaigns page description"
+  },
   "Portfolio": {
     "meta_title": "Portfolio",
     "meta_description": "Bienvenue sur la page de mon portfolio !",
