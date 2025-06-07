@@ -403,17 +403,17 @@ export default function CampaignDetails({ campaignName }: CampaignDetailsProps) 
                                     <p className="text-sm mb-2 whitespace-pre-wrap">{tweet.text}</p>
                                     <div className="flex items-center gap-4 text-muted-foreground">
                                       <span className="text-xs">
-                                        {tweet.favoriteCount.toLocaleString()}
+                                        {(tweet.favoriteCount || 0).toLocaleString()}
                                         {' '}
                                         likes
                                       </span>
                                       <span className="text-xs">
-                                        {tweet.retweetCount.toLocaleString()}
+                                        {(tweet.retweetCount || 0).toLocaleString()}
                                         {' '}
                                         retweets
                                       </span>
                                       <span className="text-xs">
-                                        {tweet.replyCount.toLocaleString()}
+                                        {(tweet.replyCount || 0).toLocaleString()}
                                         {' '}
                                         replies
                                       </span>

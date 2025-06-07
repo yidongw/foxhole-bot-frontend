@@ -15,6 +15,11 @@ const remotePatterns = [
     hostname: 'pbs.twimg.com',
     pathname: '/**',
   },
+  {
+    protocol: 'https' as const,
+    hostname: 'abs.twimg.com',
+    pathname: '/**',
+  },
 ];
 
 export default withSentryConfig(
