@@ -32,6 +32,7 @@ async function createCampaign(campaignData: {
   keywords: string[];
   rewardAmount: number | null;
   rewardTicker: 'SOL' | 'USDC' | null;
+  code: string;
 }): Promise<void> {
   const endpoint = '/api/v1/campaigns';
 
@@ -51,6 +52,7 @@ async function createCampaign(campaignData: {
         : campaignData.rewardTicker === 'USDC'
           ? 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
           : null,
+      code: campaignData.code,
     }),
   });
 
@@ -91,6 +93,7 @@ export default function Campaigns() {
     keywords: string[];
     rewardAmount: number | null;
     rewardTicker: 'SOL' | 'USDC' | null;
+    code: string;
   }): Promise<void> => {
     try {
       await createCampaign(campaignData);

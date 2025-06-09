@@ -105,7 +105,7 @@ export default function ParticipantsTable({ data, isLoading = false, isError = f
   // Loading state
   if (isLoading) {
     return (
-      <div className="animate-pulse space-y-3 h-[638px] p-4">
+      <div className="animate-pulse space-y-3 h-[590px] p-4">
         {Array.from({ length: 10 }).map((_, i) => (
           <div key={i} className="flex items-center gap-2">
             <div className="w-10 h-4 bg-muted rounded" />
@@ -125,7 +125,7 @@ export default function ParticipantsTable({ data, isLoading = false, isError = f
   // Error state
   if (isError) {
     return (
-      <div className="text-red-500 text-center py-8 h-[638px] flex items-center justify-center">
+      <div className="text-red-500 text-center py-8 h-32 flex items-center justify-center">
         Failed to load participants
       </div>
     );
@@ -134,7 +134,7 @@ export default function ParticipantsTable({ data, isLoading = false, isError = f
   // Empty state
   if (data.length === 0) {
     return (
-      <div className="text-muted-foreground text-center py-8 h-[638px] flex items-center justify-center">
+      <div className="text-muted-foreground text-center py-8 h-32 flex items-center justify-center">
         No participants yet
       </div>
     );
@@ -170,7 +170,7 @@ export default function ParticipantsTable({ data, isLoading = false, isError = f
         <DataTable
           columns={columns}
           data={data} // Show all participants
-          maxHeight="638px" // Fixed height to match container
+          maxHeight="590px" // Fixed height to match CampaignTweets
           showPagination={false}
         />
       </div>

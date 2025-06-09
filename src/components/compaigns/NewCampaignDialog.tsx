@@ -28,6 +28,7 @@ type NewCampaignDialogProps = {
   onSubmit: (campaign: {
     name: string;
     keywords: string[];
+    code: string;
     rewardAmount: number | null;
     rewardTicker: Token | null;
   }) => Promise<void>;
@@ -38,6 +39,7 @@ export default function NewCampaignDialog({ onSubmit }: NewCampaignDialogProps) 
   const [name, setName] = useState('');
   const [keywords, setKeywords] = useState<string[]>([]);
   const [keywordInput, setKeywordInput] = useState('');
+  const [code, setCode] = useState('');
   const [rewardAmount, setRewardAmount] = useState<string>('');
   const [rewardTicker, setRewardTicker] = useState<Token | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,7 +47,7 @@ export default function NewCampaignDialog({ onSubmit }: NewCampaignDialogProps) 
   const handleKeywordInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if ((e.key === ' ' || e.key === 'Enter') && keywordInput.trim()) {
       e.preventDefault();
-      const newKeyword = keywordInput.trim();
+      const newKeyword = keywordInput.trim().replace(/\s/g, '');
       if (!keywords.includes(newKeyword)) {
         setKeywords([...keywords, newKeyword]);
       }
@@ -55,7 +57,7 @@ export default function NewCampaignDialog({ onSubmit }: NewCampaignDialogProps) 
 
   const handleKeywordBlur = () => {
     if (keywordInput.trim()) {
-      const newKeyword = keywordInput.trim();
+      const newKeyword = keywordInput.trim().replace(/\s/g, '');
       if (!keywords.includes(newKeyword)) {
         setKeywords([...keywords, newKeyword]);
       }
@@ -80,6 +82,7 @@ export default function NewCampaignDialog({ onSubmit }: NewCampaignDialogProps) 
     const campaignData = {
       name: name.trim(),
       keywords,
+      code: code.trim(),
       rewardAmount: rewardAmount ? Number(rewardAmount) : null,
       rewardTicker,
     };
@@ -93,6 +96,7 @@ export default function NewCampaignDialog({ onSubmit }: NewCampaignDialogProps) 
       setName('');
       setKeywords([]);
       setKeywordInput('');
+      setCode('');
       setRewardAmount('');
       setRewardTicker(null);
       setOpen(false);
@@ -103,7 +107,7 @@ export default function NewCampaignDialog({ onSubmit }: NewCampaignDialogProps) 
     }
   };
 
-  const isFormValid = name.trim() && keywords.length > 0;
+  const isFormValid = name.trim() && code.trim() && keywords.length > 0;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -115,7 +119,7 @@ export default function NewCampaignDialog({ onSubmit }: NewCampaignDialogProps) 
           <DialogTitle>Create New Campaign</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-3">
+          <div className="flex flex-col gap-3">
             <Label htmlFor="name">Campaign Name</Label>
             <Input
               id="name"
@@ -126,7 +130,7 @@ export default function NewCampaignDialog({ onSubmit }: NewCampaignDialogProps) 
             />
           </div>
 
-          <div className="space-y-3">
+          <div className="flex flex-col gap-3">
             <Label htmlFor="keywords">Keywords</Label>
             <Input
               id="keywords"
@@ -154,7 +158,7 @@ export default function NewCampaignDialog({ onSubmit }: NewCampaignDialogProps) 
             )}
           </div>
 
-          <div className="space-y-3">
+          <div className="flex flex-col gap-3">
             <Label>Reward (Optional)</Label>
             <div className="flex gap-2">
               <div className="flex-1">
@@ -179,6 +183,28 @@ export default function NewCampaignDialog({ onSubmit }: NewCampaignDialogProps) 
                 </Select>
               </div>
             </div>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="code">
+              Code (ask
+              {' '}
+              <a
+                href="https://t.me/alan_ywang"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 underline"
+              >
+                Alan
+              </a>
+              {' '}
+              to get it)
+            </Label>
+            <Input
+              id="code"
+              value={code}
+              onChange={e => setCode(e.target.value)}
+            />
           </div>
 
           <DialogFooter>

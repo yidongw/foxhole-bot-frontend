@@ -12,6 +12,7 @@ import {
 import { useRouter } from '@/libs/i18nNavigation';
 import React from 'react';
 import NewCampaignDialog from './NewCampaignDialog';
+import getStatusBadge from './StatusBadge';
 
 // Define the types based on the API response
 export type Campaign = {
@@ -19,7 +20,8 @@ export type Campaign = {
   name: string;
   keywords: string[];
   createdAt: string;
-  endedAt: string | null;
+  endAt: string | null;
+  status: string;
   rewardAmount: number | null;
   rewardTicker: string | null;
   rewardChain: string | null;
@@ -37,6 +39,7 @@ type CampaignsTableProps = {
     keywords: string[];
     rewardAmount: number | null;
     rewardTicker: 'SOL' | 'USDC' | null;
+    code: string;
   }) => Promise<void>;
 };
 
@@ -110,21 +113,46 @@ export default function CampaignsTable({ data, onNewCampaign }: CampaignsTablePr
       cell: ({ row }) => (
         <div className="text-muted-foreground">
           {row.original.createdAt
-            ? new Date(row.original.createdAt).toLocaleDateString()
+            ? new Date(row.original.createdAt).toLocaleDateString([], {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })
             : '-'}
         </div>
       ),
     },
     {
       accessorKey: 'endedAt',
-      header: 'Ended At',
+      header: 'End At',
       cell: ({ row }) => (
         <div className="text-muted-foreground">
-          {row.original.endedAt
-            ? new Date(row.original.endedAt).toLocaleString()
-            : 'Active'}
+          {row.original.endAt
+            ? new Date(row.original.endAt).toLocaleString([], {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })
+            : '-'}
         </div>
       ),
+    },
+    {
+      accessorKey: 'Status',
+      header: 'Status',
+      cell: ({ row }) => {
+        const status = row.original.status?.toLowerCase();
+
+        if (!status) {
+          return <div className="text-muted-foreground">-</div>;
+        }
+
+        return getStatusBadge(status);
+      },
     },
     {
       accessorKey: 'reward',
@@ -140,15 +168,6 @@ export default function CampaignsTable({ data, onNewCampaign }: CampaignsTablePr
           </div>
         );
       },
-    },
-    {
-      accessorKey: 'rewardChain',
-      header: 'Chain',
-      cell: ({ row }) => (
-        <div>
-          {row.original.rewardChain || '-'}
-        </div>
-      ),
     },
     {
       accessorKey: 'tweetCount',
@@ -175,6 +194,7 @@ export default function CampaignsTable({ data, onNewCampaign }: CampaignsTablePr
     keywords: string[];
     rewardAmount: number | null;
     rewardTicker: 'SOL' | 'USDC' | null;
+    code: string;
   }): Promise<void> => {
     if (onNewCampaign) {
       await onNewCampaign(campaignData);
