@@ -55,7 +55,10 @@ export default async function RootLayout(props: {
             messages={messages}
           >
             <PostHogProvider>
-              <TurnstileProtection siteKey={Env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}>
+              <TurnstileProtection
+                invisibleSiteKey={Env.NEXT_PUBLIC_INVISIBLE_TURNSTILE_SITE_KEY}
+                managedSiteKey={Env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+              >
                 {props.children}
               </TurnstileProtection>
             </PostHogProvider>

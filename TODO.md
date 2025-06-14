@@ -2,6 +2,8 @@
 [x] table header should be stick on the top
 [x] add the title of discover and profiles
 [x] add the table for the discover
+[ ] page title should be higlited when it is active
+
 [ ] In profile change from something to nonthing is remove
 [ ] In profile change from nothing to something is add
 [ ] In profile change deleted from false to true is deleted
