@@ -1,6 +1,6 @@
 'use client';
 
-import { useWebSocket } from '@/hooks/useWebSocket';
+import { useWebSocket } from '@/contexts/WebSocketContext';
 import { fetchApi } from '@/libs/api';
 import { Env } from '@/libs/Env';
 import { useAuthStore } from '@/store/authStore';

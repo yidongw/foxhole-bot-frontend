@@ -1,12 +1,13 @@
 'use client';
 import type { ReactNode } from 'react';
+import { WebSocketProvider } from '@/contexts/WebSocketProvider';
 import { wagmiConfig } from '@/wagmi';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { useEffect, useState } from 'react';
-import * as React from 'react';
 
+import * as React from 'react';
 import { WagmiProvider } from 'wagmi';
 
 export function Providers({ children }: Readonly<{ children: ReactNode }>) {
@@ -31,7 +32,9 @@ export function Providers({ children }: Readonly<{ children: ReactNode }>) {
             enableSystem
             disableTransitionOnChange
           >
-            {mounted && children}
+            <WebSocketProvider>
+              {mounted && children}
+            </WebSocketProvider>
           </ThemeProvider>
         </RainbowKitProvider>
       </QueryClientProvider>

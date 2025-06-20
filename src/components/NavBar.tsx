@@ -1,11 +1,12 @@
-import { Compass, Megaphone, Users } from 'lucide-react';
+import { Activity, Compass, Megaphone, Users } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { NavLink } from './NavLink';
 import { SearchInput } from './SearchInput';
+import { StatusIndicator } from './StatusIndicator';
 import { ThemeSwitcher } from './ThemeSwitcher';
 
 export const NavBar = () => (
-  <div className="sticky top-0 z-50 bg-gray-100 dark:bg-gray-900 p-4 border-b border-gray-200 dark:border-gray-800">
+  <div className="sticky top-0 z-50 bg-gray-200 dark:bg-gray-900 p-4 border-b border-gray-200 dark:border-gray-800">
     <div className="mx-auto max-w-screen-lg flex items-center justify-between">
       <Image
         src="/foxhole.jpg"
@@ -13,24 +14,30 @@ export const NavBar = () => (
         width={32}
         height={32}
       />
-      <Link href="/discover" className="flex items-center gap-2 hover:opacity-80">
+      <NavLink href="/monitor">
+        <Activity className="w-4 h-4" />
+        <span className="hidden sm:inline">Monitor</span>
+      </NavLink>
+
+      <NavLink href="/discover">
         <Compass className="w-4 h-4" />
         <span className="hidden sm:inline">Discover</span>
-      </Link>
+      </NavLink>
 
-      <Link href="/profiles" className="flex items-center gap-2 hover:opacity-80">
+      <NavLink href="/profiles">
         <Users className="w-4 h-4" />
         <span className="hidden sm:inline">Profiles</span>
-      </Link>
+      </NavLink>
 
-      <Link href="/campaigns" className="flex items-center gap-2 hover:opacity-80">
+      <NavLink href="/campaigns">
         <Megaphone className="w-4 h-4" />
         <span className="hidden sm:inline">Campaigns</span>
-      </Link>
+      </NavLink>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-4">
         <SearchInput />
         <ThemeSwitcher />
+        <StatusIndicator />
       </div>
     </div>
   </div>

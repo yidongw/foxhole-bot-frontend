@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 type AuthState = {
   token: string | null;
@@ -8,9 +9,21 @@ type AuthState = {
   setClientId: (clientId: string) => void;
 };
 
-export const useAuthStore = create<AuthState>(set => ({
-  token: null,
-  clientId: uuidv4(), // Generate a default UUID
-  setToken: token => set({ token }),
-  setClientId: clientId => set({ clientId }),
-}));
+export const useAuthStore = create<AuthState>()(
+  persist(
+    set => ({
+      token: null,
+      clientId: uuidv4(), // Initial clientId will be generated if not found in storage
+      setToken: token => set({ token }),
+      setClientId: clientId => set({ clientId }),
+    }),
+    {
+      name: 'auth-storage',
+      storage: createJSONStorage(() => localStorage),
+      partialize: state => ({
+        clientId: state.clientId,
+        token: state.token,
+      }),
+    },
+  ),
+);

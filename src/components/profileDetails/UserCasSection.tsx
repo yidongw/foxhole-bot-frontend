@@ -69,7 +69,7 @@ const UserCasSection: React.FC<{ cas: ProfileDetailsData['userCas'] }> = ({ cas 
                     href={`https://twitter.com/i/web/status/${entry.tweetId}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline"
+                    className="text-blue-500 dark:text-blue-400 hover:underline"
                   >
                     View Tweet
                   </a>

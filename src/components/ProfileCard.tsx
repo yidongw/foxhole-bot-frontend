@@ -180,7 +180,7 @@ export default function ProfileCard({ profile, locale }: ProfileCardProps) {
                 href={profile.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 hover:underline"
+                className="text-blue-500 dark:text-blue-400 hover:underline"
                 onClick={e => e.stopPropagation()}
               >
                 {profile.website.replace(/^https?:\/\//, '')}

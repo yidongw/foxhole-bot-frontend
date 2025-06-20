@@ -55,7 +55,7 @@ export default function TurnstileChallenge({
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex flex-col items-center">
       <Turnstile
         id={refreshKey}
         siteKey={siteKey}
