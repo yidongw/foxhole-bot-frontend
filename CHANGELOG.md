@@ -1,3 +1,30 @@
+# 1.0.0 (2025-06-22)
+
+
+### Bug Fixes
+
+* add NEXT_PUBLIC_API_HOST to dockerfile ([74a20c9](https://github.com/yidongw/foxhole-bot-frontend/commit/74a20c9b736bebf1c4b4aab7fee21906f40ad4f4))
+* add NEXT_PUBLIC_API_HOST to dockerfile again ([95fc490](https://github.com/yidongw/foxhole-bot-frontend/commit/95fc49088f671a0b035c05cd50f67a6fab154a5e))
+* add NEXT_PUBLIC_API_HOST to dockerfile again and again ([0f52ce4](https://github.com/yidongw/foxhole-bot-frontend/commit/0f52ce43e2076c5a38a3d6dbeb39dc0dc935ea2b))
+* add output: standalone to the next config file ([4421920](https://github.com/yidongw/foxhole-bot-frontend/commit/4421920430461a43f84538f15094ba92b5635362))
+* fix bug for null tweet.replyCount and external image url ([ee0b0eb](https://github.com/yidongw/foxhole-bot-frontend/commit/ee0b0ebdf5ed1a8e0c28e3e7323b5b93cffe53f1))
+* update dockerfile ([b26d3d2](https://github.com/yidongw/foxhole-bot-frontend/commit/b26d3d200a93d832724dbc74ca8b2dd78c333307))
+* update package-lock file ([0400f87](https://github.com/yidongw/foxhole-bot-frontend/commit/0400f87bab5807635628645211cfab554d5af7e6))
+* update readme ([3c9594f](https://github.com/yidongw/foxhole-bot-frontend/commit/3c9594f3772c754d65b20b58821b39e192f14648))
+
+
+### Features
+
+* add campaign pages ([053669f](https://github.com/yidongw/foxhole-bot-frontend/commit/053669f4747af4cda7b97cbf610b99392c01583b))
+* add cloudflare TURNSTILE ([915bf58](https://github.com/yidongw/foxhole-bot-frontend/commit/915bf5825e4a64b3b17c49e48d1d3a1ff0ef276d))
+* add code and moniter status ([ec8aaf9](https://github.com/yidongw/foxhole-bot-frontend/commit/ec8aaf941d71530e9c49dc65cd4cc6942c49e2f6))
+* add discover page ([9d9dc69](https://github.com/yidongw/foxhole-bot-frontend/commit/9d9dc6992608ff5af3480dfcb16d887458b9477c))
+* add foxhole profile pages ([d689b37](https://github.com/yidongw/foxhole-bot-frontend/commit/d689b378ff756135e44a6275f5e704d4b8222fc0))
+* add invisialbe turnstile ([bd81feb](https://github.com/yidongw/foxhole-bot-frontend/commit/bd81feba32414128038b012332eaee0af5e736b0))
+* add key followers to the profile page ([b599ba3](https://github.com/yidongw/foxhole-bot-frontend/commit/b599ba30f7f3a61ffdb2a8ceef7dfd8a9c317765))
+* add monitor page ([af35b44](https://github.com/yidongw/foxhole-bot-frontend/commit/af35b445a9d046bf645cce56b724dbde0de2c245))
+* set the monitor as the home page; changed search to popup; toast show ws error ([b41a01b](https://github.com/yidongw/foxhole-bot-frontend/commit/b41a01b13a4c0fb47a4491ad17c036c5d559a61a))
+
 # 1.0.0 (2025-06-20)
 
 

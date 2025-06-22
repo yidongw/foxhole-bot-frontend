@@ -1,4 +1,3 @@
-import { NavBar } from '@/components/NavBar';
 import { BaseTemplate } from '@/templates/BaseTemplate';
 import { setRequestLocale } from 'next-intl/server';
 
@@ -11,7 +10,7 @@ export default async function Layout(props: {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <BaseTemplate>
         <div>{props.children}</div>
       </BaseTemplate>

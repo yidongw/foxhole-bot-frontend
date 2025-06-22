@@ -57,7 +57,7 @@ export default function TurnstileProtection({ invisibleSiteKey, managedSiteKey, 
       </div>
 
       {/* Show managed turnstile when needed */}
-      {(!isVerified || !token) && (
+      {/* {(!isVerified || !token) && (
         <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
           <div className="w-full max-w-md rounded-lg border border-border bg-card p-6 shadow-sm">
             <h1 className="mb-6 text-center text-2xl font-bold">Security Check</h1>
@@ -71,10 +71,11 @@ export default function TurnstileProtection({ invisibleSiteKey, managedSiteKey, 
             />
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Show children only when verified and managed turnstile is not shown */}
-      {token && isVerified && <>{children}</>}
+      {/* {token && isVerified && <>{children}</>} */}
+      {children}
     </>
   );
 }
