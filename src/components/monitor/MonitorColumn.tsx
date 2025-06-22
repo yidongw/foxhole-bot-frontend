@@ -7,6 +7,7 @@ import { useProfileUpdatesStore } from '@/store/profileUpdatesStore';
 import { useStatusUpdateStore } from '@/store/statusUpdateStore';
 import { useTwitterUsersStore } from '@/store/twitterUsersStore';
 import React from 'react';
+import { toast } from 'sonner';
 import { Tweet } from '../tweet/Tweet';
 import { MonitorColumnNavBar } from './MonitorColumnNavBar';
 import { ProfileChange } from './ProfileChange';
@@ -23,9 +24,15 @@ export const MonitorColumn: React.FC<MonitorColumnProps> = ({ columnId, columnNa
   const { users } = useTwitterUsersStore();
   const { updates: profileUpdates } = useProfileUpdatesStore();
   const { statuses: statusUpdates } = useStatusUpdateStore();
-  const { unsubscribeToUser } = useWebSocket();
+  const { unsubscribeToUser, isConnected } = useWebSocket();
 
   const handleRemoveColumn = () => {
+    // Check if WebSocket is connected before allowing column removal
+    if (!isConnected) {
+      toast.error('Not connected to server. Please connect first before removing columns.');
+      return;
+    }
+
     // Check if other columns are subscribed to the same users
     const otherColumns = columns.filter(col => col.id !== columnId);
 

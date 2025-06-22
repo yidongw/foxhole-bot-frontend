@@ -9,9 +9,10 @@ type NavLinkProps = {
   href: string;
   children: ReactNode;
   className?: string;
+  default?: boolean;
 };
 
-export const NavLink = ({ href, children, className = '' }: NavLinkProps) => {
+export const NavLink = ({ href, children, className = '', default: isDefault = false }: NavLinkProps) => {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
@@ -20,7 +21,11 @@ export const NavLink = ({ href, children, className = '' }: NavLinkProps) => {
   }, []);
 
   // During SSR and initial render, don't apply active styles to prevent hydration mismatch
-  const isActive = mounted && pathname === href;
+  const isActive = mounted && (
+    isDefault
+      ? (pathname === '/' || pathname === href)
+      : pathname === href || pathname.startsWith(`${href}/`)
+  );
 
   return (
     <Link

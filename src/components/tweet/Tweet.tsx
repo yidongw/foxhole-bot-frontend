@@ -192,7 +192,7 @@ export const Tweet: React.FC<{ tweet: TwitterStatus; twitterUser: TwitterUser }>
           </div>
         )}
         {/* Tweet text */}
-        <div className="text-base whitespace-pre-wrap">
+        <div className="text-base whitespace-pre-wrap break-words">
           {renderText(showFullText ? (tweet.fullText || tweet.text) : tweet.text, showFullText ? tweet.notetweetEntities : tweet.entities, tweet.medias, isReply)}
         </div>
         {/* Show more button */}

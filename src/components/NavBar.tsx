@@ -14,7 +14,7 @@ export const NavBar = () => (
         width={32}
         height={32}
       />
-      <NavLink href="/monitor">
+      <NavLink href="/" default>
         <Activity className="w-4 h-4" />
         <span className="hidden sm:inline">Monitor</span>
       </NavLink>

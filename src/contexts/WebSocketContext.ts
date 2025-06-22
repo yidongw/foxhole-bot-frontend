@@ -3,6 +3,7 @@ import { createContext, use } from 'react';
 export type WebSocketContextType = {
   isConnected: boolean;
   isVerified: boolean;
+  connectionError: string | null;
   verifyTurnstile: (type: 'turnstile_verify' | 'invisible_turnstile_verify', token: string) => void;
   subscribeToUser: (twitterUsername: string) => void;
   unsubscribeToUser: (twitterUsername: string) => void;

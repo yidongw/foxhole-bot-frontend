@@ -3,9 +3,17 @@
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useWebSocket } from '@/contexts/WebSocketContext';
+import { usePathname } from 'next/navigation';
 
 export const StatusIndicator = () => {
   const { isConnected, connect } = useWebSocket();
+  const pathname = usePathname();
+  const isMonitorPage = pathname === '/' || pathname === '/monitor';
+
+  // Don't render if not on monitor page
+  if (!isMonitorPage) {
+    return null;
+  }
 
   const handleClick = () => {
     if (!isConnected) {

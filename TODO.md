@@ -4,12 +4,16 @@
 [x] add the table for the discover
 [x] page title should be highlighted when it is active
 [x] theme fix
-[ ] nav bar should be able to change name and add remove users. we will have a drop down for the list of users. left side are the checkboxes to filter user. right side are the delection buttons. click them to unsub from this column
-[ ] websocket error toast
-[ ] add a card when hover
 [ ] add the twitter link to the profile and hover card
+[ ] nav bar should be able to change name and add remove users. we will have a drop down for the list of users. left side are the checkboxes to filter user. right side are the delection buttons. click them to unsub from this column
+[ ] add a card when hover
 [ ] drag and drop using https://github.com/atlassian/pragmatic-drag-and-drop?tab=readme-ov-file or  https://github.com/clauderic/dnd-kit?tab=readme-ov-file
 [ ] use BotD to prevent botting. show a blocked page when detect bot
+
+[x] websocket error toast
+[x] try reconnect if we didn't got disconnect by some known error
+[x] sub to elon musk if user have no sub
+[x] make the monitor as the default page
 
 [ ] add filter for filtering read and unread tweets. filter status, following, profile update
 
