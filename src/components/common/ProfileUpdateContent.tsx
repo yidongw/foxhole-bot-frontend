@@ -69,7 +69,7 @@ export const ProfileUpdateContent: React.FC<ProfileUpdateContentProps> = ({
                     )
                   : (
                       <div className="text-base font-medium break-words">
-                        {oldValue ? oldValue.replace(/\//g, '/\u200B') : 'N/A'}
+                        {oldValue && typeof oldValue === 'string' ? oldValue.replace(/\//g, '/\u200B') : (oldValue || 'N/A')}
                       </div>
                     )}
               </div>
@@ -88,7 +88,7 @@ export const ProfileUpdateContent: React.FC<ProfileUpdateContentProps> = ({
                     )
                   : (
                       <div className="text-base font-medium break-words">
-                        {newValue ? newValue.replace(/\//g, '/\u200B') : 'N/A'}
+                        {newValue && typeof newValue === 'string' ? newValue.replace(/\//g, '/\u200B') : (newValue || 'N/A')}
                       </div>
                     )}
               </div>
@@ -110,9 +110,10 @@ export const ProfileUpdateContent: React.FC<ProfileUpdateContentProps> = ({
                   )
                 : (
                     <div className="text-base font-medium break-words">
-                      {(actionType === 'Added' ? newValue : oldValue)
-                        ? (actionType === 'Added' ? newValue : oldValue).replace(/\//g, '/\u200B')
-                        : 'N/A'}
+                      {(() => {
+                        const value = actionType === 'Added' ? newValue : oldValue;
+                        return value && typeof value === 'string' ? value.replace(/\//g, '/\u200B') : (value || 'N/A');
+                      })()}
                     </div>
                   )}
             </div>

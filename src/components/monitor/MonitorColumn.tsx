@@ -71,13 +71,15 @@ export const MonitorColumn: React.FC<MonitorColumnProps> = ({ columnId, columnNa
     // Profile changes (now flat array)
     const userProfileUpdates = profileUpdates[userId] || [];
     userProfileUpdates.forEach((update) => {
-      allProfileChanges.push({
-        type: 'profileChange',
-        change: { key: update.key, old: update.old, new: update.new, time: update.time, username },
-        time: new Date(update.time),
-        id: update.key + update.new + new Date(update.time).toISOString() + username,
-        twitterUser: user,
-      });
+      if (update.key !== 'lastTweetId' && update.key !== 'statusesCount') {
+        allProfileChanges.push({
+          type: 'profileChange',
+          change: { key: update.key, old: update.old, new: update.new, time: update.time, username },
+          time: new Date(update.time),
+          id: update.key + update.new + new Date(update.time).toISOString() + username,
+          twitterUser: user,
+        });
+      }
     });
   });
 

@@ -19,7 +19,7 @@ export const useProfileUpdatesStore = create<ProfileUpdatesState>()(
         const userUpdates = state.updates[userId] || [];
         let newUserUpdates = [...userUpdates];
         Object.entries(changes).forEach(([key, value]) => {
-          if (key === 'lastTweetId') {
+          if (key === 'lastTweetId' || key === 'statusesCount') {
             return;
           }
           // Remove any existing update with the same key and new value
