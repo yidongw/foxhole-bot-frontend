@@ -1,4 +1,4 @@
-import { Activity, Compass, Megaphone, Users } from 'lucide-react';
+import { Activity, Compass, Megaphone, Target, Users } from 'lucide-react';
 import Image from 'next/image';
 import { NavLink } from './NavLink';
 import { SearchInput } from './SearchInput';
@@ -16,7 +16,7 @@ export const NavBar = () => (
       />
       <NavLink href="/" default>
         <Activity className="w-4 h-4" />
-        <span className="hidden sm:inline">Monitor</span>
+        <span className="hidden sm:inline">Profiles</span>
       </NavLink>
 
       <NavLink href="/discover">
@@ -24,14 +24,19 @@ export const NavBar = () => (
         <span className="hidden sm:inline">Discover</span>
       </NavLink>
 
-      <NavLink href="/profiles">
+      <NavLink href="/monitor">
         <Users className="w-4 h-4" />
-        <span className="hidden sm:inline">Profiles</span>
+        <span className="hidden sm:inline">Monitor</span>
       </NavLink>
 
       <NavLink href="/campaigns">
         <Megaphone className="w-4 h-4" />
         <span className="hidden sm:inline">Campaigns</span>
+      </NavLink>
+
+      <NavLink href="/sniper">
+        <Target className="w-4 h-4" />
+        <span className="hidden sm:inline">Sniper</span>
       </NavLink>
 
       <div className="flex items-center gap-4">

@@ -8,6 +8,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useMonitorColumnsStore } from '@/store/monitorColumnsStore';
 import { useProfileUpdatesStore } from '@/store/profileUpdatesStore';
 import { useStatusUpdateStore } from '@/store/statusUpdateStore';
+import { useTokenStore } from '@/store/tokenStore';
 import { useTwitterUsersStore } from '@/store/twitterUsersStore';
 import { usePathname } from 'next/navigation';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -22,16 +23,66 @@ type WebSocketMessage = {
   twitterUsername?: string;
 };
 
+type TokenInfoPair = {
+  chainId: string;
+  dexId: string;
+  url: string;
+  pairAddress: string;
+  baseToken: {
+    address: string;
+    name: string;
+    symbol: string;
+  };
+  quoteToken: {
+    address: string;
+    name: string;
+    symbol: string;
+  };
+  priceUsd: string;
+  liquidity: {
+    usd: number;
+  };
+  volume: {
+    h24: number;
+  };
+  txns: {
+    h24: {
+      buys: number;
+      sells: number;
+    };
+  };
+};
+
+type TokenInfoData = {
+  pairs: TokenInfoPair[];
+};
+
+type RawTwitterMessageLog = {
+  log_type: 'raw_twitter_message';
+  message: {
+    type: 'user-update';
+    data: UserUpdateMessage['data'];
+  };
+};
+
+type TokenInfoLog = {
+  log_type: 'token_info';
+  token_address: string;
+  data: TokenInfoData;
+  tweet_event_id?: string;
+};
+
 type WebSocketResponse = {
   type: 'turnstile_verify' | 'invisible_turnstile_verify' | 'user-update' | 'error' | 'disconnect' | 'connected';
   message?: string;
   data?: UserUpdateMessage['data'];
   subscriptions?: number;
+  log_type?: 'raw_twitter_message' | 'token_info';
 };
 
 export function WebSocketProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const isRootPage = pathname === '/';
+  const isRootPage = pathname === '/monitor' || pathname === '/sniper';
 
   const [isVerified, setIsVerified] = useState(true);
   const [connect, setConnect] = useState(isRootPage);
@@ -41,16 +92,95 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
   const { clientId } = useAuthStore();
   const { setUser } = useTwitterUsersStore();
   const { addProfileUpdates } = useProfileUpdatesStore();
-  const { addStatusUpdate } = useStatusUpdateStore();
+  const { addStatusUpdate, addTokenToStatus } = useStatusUpdateStore();
   const { columns, addColumn } = useMonitorColumnsStore();
+  const { updateToken } = useTokenStore();
   const sendMessageRef = useRef<((message: string) => void) | null>(null);
 
   // Update connection state when pathname changes
   const shouldConnect = isRootPage && connect;
 
+  // Helper function to convert chainId string to number
+  const chainIdToNumber = (chainId: string): number => {
+    const chainMap: Record<string, number> = {
+      bsc: 56,
+      ethereum: 1,
+      eth: 1,
+      polygon: 137,
+      arbitrum: 42161,
+      optimism: 10,
+      avalanche: 43114,
+      base: 8453,
+    };
+    return chainMap[chainId.toLowerCase()] || 56; // Default to BSC
+  };
+
   const handleMessage = useCallback((message: any) => {
     try {
       const response = JSON.parse(message.data) as WebSocketResponse;
+
+      // Handle raw_twitter_message log type
+      if (response.log_type === 'raw_twitter_message') {
+        const rawMessage = response as any as RawTwitterMessageLog;
+        if (rawMessage.message?.type === 'user-update' && rawMessage.message.data) {
+          setUser(rawMessage.message.data.twitterUser);
+          addProfileUpdates(rawMessage.message.data.twitterUser.id, rawMessage.message.data.changes);
+          if (rawMessage.message.data.status) {
+            addStatusUpdate(rawMessage.message.data.twitterUser.id, rawMessage.message.data.status);
+          }
+        }
+        return;
+      }
+
+      // Handle token_info log type
+      if (response.log_type === 'token_info') {
+        const tokenLog = response as any as TokenInfoLog;
+        if (tokenLog.data?.pairs && tokenLog.data.pairs.length > 0) {
+          // Get the primary pair (first one with highest liquidity)
+          const primaryPair = tokenLog.data.pairs.reduce((prev, current) =>
+            (current.liquidity.usd > prev.liquidity.usd) ? current : prev,
+          );
+
+          // Calculate total txns for h24
+          const txns24hTotal = primaryPair.txns.h24.buys + primaryPair.txns.h24.sells;
+
+          // Convert chainId to number
+          const chainId = chainIdToNumber(primaryPair.chainId);
+
+          // Update token in store
+          updateToken({
+            token_address: primaryPair.baseToken.address,
+            name: primaryPair.baseToken.name,
+            symbol: primaryPair.baseToken.symbol,
+            chainId,
+            pair_address: primaryPair.pairAddress,
+            dex: primaryPair.dexId,
+            price_usd: primaryPair.priceUsd,
+            liquidity_usd: primaryPair.liquidity.usd,
+            volume_24h: primaryPair.volume.h24,
+            txns_24h_total: txns24hTotal,
+            dex_url: primaryPair.url,
+          });
+
+          // Add token to the status if tweet_event_id is provided
+          if (tokenLog.tweet_event_id) {
+            // Collect all unique chainIds from all pairs
+            const allChainIds = Array.from(
+              new Set(tokenLog.data.pairs.map(pair => chainIdToNumber(pair.chainId))),
+            );
+
+            addTokenToStatus(tokenLog.tweet_event_id, {
+              ca: primaryPair.baseToken.address,
+              name: primaryPair.baseToken.name,
+              symbol: primaryPair.baseToken.symbol,
+              chainIds: allChainIds,
+            });
+          }
+        }
+        return;
+      }
+
+      // Handle regular response types
       if (response.type === 'turnstile_verify' || response.type === 'invisible_turnstile_verify') {
         setIsVerified(response.message === 'pass');
       } else if (response.type === 'user-update' && response.data) {
@@ -91,7 +221,7 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error('Failed to parse WebSocket message:', error);
     }
-  }, [setUser, addProfileUpdates, addStatusUpdate, columns, addColumn]);
+  }, [setUser, addProfileUpdates, addStatusUpdate, addTokenToStatus, columns, addColumn, updateToken]);
 
   const { sendMessage, readyState } = useWebSocketLib(
     `${Env.NEXT_PUBLIC_WS_HOST}/ws/${clientId}`,

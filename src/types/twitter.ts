@@ -70,6 +70,13 @@ export type NoteTweetEntities = TwitterStatusEntities & {
   }[];
 };
 
+export type Token = {
+  ca: string;
+  name?: string;
+  symbol?: string;
+  chainIds?: number[];
+};
+
 export type TwitterStatus = {
   id: string;
   userId: string;
@@ -100,6 +107,7 @@ export type TwitterStatus = {
   replyToStatus?: TwitterStatus;
   quotedStatus?: TwitterStatus;
   mentionedUsers?: TwitterUser[];
+  tokens?: Token[];
 };
 
 export type UserUpdateMessage = {

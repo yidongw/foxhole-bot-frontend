@@ -17,6 +17,8 @@ import {
   arbitrumSepolia,
   avalanche,
   avalancheFuji,
+  bsc,
+  bscTestnet,
   mainnet,
   polygon,
   polygonAmoy,
@@ -70,6 +72,8 @@ const transports: Record<number, Transport> = {
   [zkSyncSepoliaTestnet.id]: http(),
   [polygon.id]: http(),
   [polygonAmoy.id]: http(),
+  [bsc.id]: http(),
+  [bscTestnet.id]: http(),
 };
 export const wagmiConfig = createConfig({
   chains: [
@@ -83,6 +87,8 @@ export const wagmiConfig = createConfig({
     customZkSyncSepoliaTestnet,
     polygon,
     customPolygonAmoyTestnet,
+    bsc,
+    bscTestnet,
   ],
   connectors,
   transports,

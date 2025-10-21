@@ -1,10 +1,12 @@
 import type { NoteTweetEntities, TwitterStatus, TwitterStatusMedia, TwitterUser } from '@/types/twitter';
 import { CountdownTimer } from '@/components/common/CountdownTimer';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { useTokenStore } from '@/store/tokenStore';
 import DOMPurify from 'dompurify';
-import { BarChart2, Bookmark, ExternalLink, Heart, MessageCircle, Quote, Repeat2 } from 'lucide-react';
-import React, { useState } from 'react';
+import { BarChart2, Bookmark, Coins, ExternalLink, Heart, MessageCircle, Quote, Repeat2 } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
 import { UserInfoHeader } from '../common/UserInfoHeader';
 
 function formatCount(n?: number) {
@@ -135,6 +137,62 @@ export const Tweet: React.FC<{ tweet: TwitterStatus; twitterUser: TwitterUser }>
   const [showFullText, setShowFullText] = useState(false);
   const hasFullText = tweet.fullText && tweet.fullText !== tweet.text;
   const statusCreatedAt = tweet.retweetedStatusCreatedAt || tweet.createdAt;
+  const { setSelectedTokenByKey } = useTokenStore();
+
+  // const { tokens: tokenStore, setSelectedTokenByKey } = useTokenStore();
+
+  // // Extract tokens from tweet text
+  // const detectedTokens = useMemo((): Token[] => {
+  //   const text = tweet.fullText || tweet.text || '';
+  //   const foundTokens: Token[] = [];
+
+  //   // Check each token in the store to see if its symbol is in the text
+  //   Object.values(tokenStore).forEach((token: any) => {
+  //     // Create case-insensitive pattern that matches the symbol with optional dollar sign prefix
+  //     const symbolPattern = new RegExp(`(\\$|\\b)${token.symbol}\\b`, 'i');
+  //     if (symbolPattern.test(text)) {
+  //       // Check if not already added
+  //       if (!foundTokens.some(t => t.ca === token.token_address && t.chainIds?.[0] === token.chainId)) {
+  //         foundTokens.push({
+  //           ca: token.token_address,
+  //           symbol: token.symbol,
+  //           name: token.name,
+  //           chainIds: [token.chainId],
+  //         });
+  //       }
+  //     }
+  //   });
+
+  //   return foundTokens;
+  // }, [tweet.fullText, tweet.text, tokenStore]);
+
+  // // Merge detected tokens with tokens from the tweet object
+  // const allTokens = useMemo(() => {
+  //   const tokensArray = [...detectedTokens];
+
+  //   // Add tokens from tweet.tokens if they exist and aren't already in detectedTokens
+  //   if (tweet.tokens) {
+  //     tweet.tokens.forEach((token) => {
+  //       if (!tokensArray.some(t => t.ca === token.ca && t.chainIds?.[0] === token.chainIds?.[0])) {
+  //         tokensArray.push(token);
+  //       }
+  //     });
+  //   }
+
+  //   return tokensArray;
+  // }, [detectedTokens, tweet.tokens]);
+
+  // Get tokens directly from the status
+  const allTokens = useMemo(() => {
+    return tweet.tokens || [];
+  }, [tweet.tokens]);
+
+  const handleTokenClick = (ca: string, _symbol?: string, _name?: string, chainIds?: number[]) => {
+    // Default to BSC (56) if chainIds is not provided or empty
+    const chainId: number = chainIds?.[0] ?? 56;
+    const key = `${chainId}-${ca}`;
+    setSelectedTokenByKey(key);
+  };
 
   return (
     <div className="p-2 w-full max-w-xl relative">
@@ -177,6 +235,29 @@ export const Tweet: React.FC<{ tweet: TwitterStatus; twitterUser: TwitterUser }>
           <ExternalLink className="w-4 h-4" />
         </a>
       </div>
+
+      {/* Token Symbols Row */}
+      {allTokens.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-2 mt-1">
+          {allTokens.map(token => (
+            <Badge
+              key={`${token.ca}-${token.chainIds?.[0]}`}
+              className="cursor-pointer bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white border-0 transition-all duration-200 flex items-center gap-1 px-3 py-1 shadow-md hover:shadow-lg"
+              onClick={() => handleTokenClick(token.ca, token.symbol, token.name, token.chainIds)}
+            >
+              <Coins className="w-3 h-3" />
+              <span className="font-semibold">{token.symbol || 'Token'}</span>
+              {token.name && (
+                <span className="text-xs opacity-90">
+                  (
+                  {token.name}
+                  )
+                </span>
+              )}
+            </Badge>
+          ))}
+        </div>
+      )}
 
       {/* Second row: Tweet text */}
       <div className="mb-2">

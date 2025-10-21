@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation';
 export const StatusIndicator = () => {
   const { isConnected, connect } = useWebSocket();
   const pathname = usePathname();
-  const isMonitorPage = pathname === '/' || pathname === '/monitor';
+  const isMonitorPage = pathname === '/monitor' || pathname === '/sniper';
 
   // Don't render if not on monitor page
   if (!isMonitorPage) {
